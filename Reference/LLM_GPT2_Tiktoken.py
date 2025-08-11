@@ -17,12 +17,6 @@ n_head = 64 #2 #12
 n_layer = 128 #2 #12
 dropout = 0.5 #0.2
 
-#qa_data = pd.read_csv(r'D:\ML_Projects\LLM-From-Scratch-For-ChatBots-GPT2\Data\ChatGPT_chatlogs\GPT_chatlogs_Q_Tag_11.9K.csv')
-#qa_data = pd.read_excel(r'D:\ML_Projects\LLM-From-Scratch-For-ChatBots-GPT2\Data\SQuAD\SQuAD_Preprocessed.xlsx')
-#qa_data = pd.read_excel(r'D:\ML_Projects\LLM-From-Scratch-For-ChatBots-GPT2\Data\QuaC\QuaC_Preprocessed_18.9K Context_Trim.xlsx')
-#qa_data = pd.read_excel(r'D:\ML_Projects\LLM-From-Scratch-For-ChatBots-GPT2\Data\Kaggle\Human_Coversation.xlsx', sheet_name="Sheet1")
-#qa_data = pd.read_csv(r'D:\ML_Projects\LLM-From-Scratch-For-ChatBots-GPT2\Data\Kaggle\Conversation.csv')
-#qa_data = pd.read_csv(r'D:\ML_Projects\LLM-From-Scratch-For-ChatBots-GPT2\Data\Kaggle\FB_Chat.csv')
 qa_data = pd.read_excel(r'D:\ML_Projects\LLM-From-Scratch-For-ChatBots-GPT2\Data\Huggingface\Customer_Support_Hugg_Preprocessed.xlsx')
 tokenizer = tiktoken.get_encoding("cl100k_base")
 
