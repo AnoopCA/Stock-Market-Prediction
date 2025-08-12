@@ -3,7 +3,6 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 import os
-import tiktoken
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -17,17 +16,12 @@ n_head = 64 #2 #12
 n_layer = 128 #2 #12
 dropout = 0.5 #0.2
 
-qa_data = pd.read_excel(r'D:\ML_Projects\LLM-From-Scratch-For-ChatBots-GPT2\Data\Huggingface\Customer_Support_Hugg_Preprocessed.xlsx')
+#qa_data = pd.read_excel(r'D:\ML_Projects\LLM-From-Scratch-For-ChatBots-GPT2\Data\Huggingface\Customer_Support_Hugg_Preprocessed.xlsx')
 tokenizer = tiktoken.get_encoding("cl100k_base")
 
-unique_tokens = set()
-for row in qa_data.itertuples():
-    #chat = row.chat
-    chat = row.Question + " [SEP] " + row.Answer
-    #chat = "Context: " + row.Context + " [SEP] Question: " + row.Question + " [SEP] Answer: " + str(row.Answer)
-    tokens = tokenizer.encode(chat)
-    unique_tokens.update(tokens)
-vocab_size = max(unique_tokens) + 1
+stock_data = pd.read_csv(r'D:\ML_Projects\Stock-Market-Prediction\NIFTY 50_minute_data.csv')
+stock_data['open'] = stock_data['open'].apply(lambda x: round(x))
+vocab_size = stock_data['open'].nunique()
 
 class Head(nn.Module):
     """ one head of self-attention """
@@ -153,15 +147,6 @@ class GPTLanguageModel(nn.Module):
             index_next = torch.multinomial(probs, num_samples=1) # (B, 1) # sample from the distribution
             index = torch.cat((index, index_next), dim=1) # (B, T+1) # append sampled index to the running sequence
         return index
-
-def process_data(qa_data, tokenizer):
-    tokens = []
-    for row in qa_data.itertuples():
-        #chat = row.chat
-        chat = row.Question + " [SEP] " + row.Answer
-        #chat = "Context: " + row.Context + " [SEP] Question: " + row.Question + " [SEP] Answer: " + str(row.Answer)
-        tokens.append(tokenizer.encode(chat))
-    return tokens
 
 def get_batch(qa_tokenized, split):
     X = []
