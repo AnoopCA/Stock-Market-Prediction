@@ -4,14 +4,13 @@ import torch.nn as nn
 from torch.nn import functional as F
 import os
 
-#device = 'cuda' if torch.cuda.is_available() else 'cpu'
-device = 'cpu'
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 batch_size = 4 #1
 block_size = 384 #128 8 512
-max_iters = 1000 #2 #50000
+max_iters = 50000 #2 #50000
 learning_rate = 1e-4
-eval_iters = 50 #100 #1 #1000
+eval_iters = 500 #100 #1 #1000
 n_embd = 512 #256 #4 #768
 n_head = 16 #2 #12 #64
 n_layer = 24  #128 #2 #12
@@ -20,7 +19,7 @@ dropout = 0.5 #0.2
 stock_data = pd.read_csv(r'D:\ML_Projects\Stock-Market-Prediction\stock_open_data.csv')
 stock_data = stock_data['open'].apply(lambda x:list(int(i) for i in x.strip('[]').split(', ')))
 stock_data = stock_data.to_list()
-vocab_size = max(set(j for i in stock_data for j in i))
+vocab_size = max(set(j for i in stock_data for j in i)) + 1
 
 class Head(nn.Module):
     """ one head of self-attention """
