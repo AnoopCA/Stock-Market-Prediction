@@ -1,11 +1,14 @@
+# Import necessary packages
 import pandas as pd
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
 import os
 
+# Set GPU if available
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+# Setup hyperparameters
 batch_size = 4 #1
 block_size = 384 #128 8 512
 max_iters = 10000 #2 #50000
@@ -16,6 +19,7 @@ n_head = 16 #2 #12 #64
 n_layer = 24  #128 #2 #12
 dropout = 0.5 #0.2
 
+# Load the data
 stock_data = pd.read_csv(r'D:\ML_Projects\Stock-Market-Prediction\stock_open_data.csv')
 stock_data = stock_data['open'].apply(lambda x:list(int(i) for i in x.strip('[]').split(', ')))
 stock_data = stock_data.to_list()
