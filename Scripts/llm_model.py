@@ -25,6 +25,7 @@ stock_data = stock_data['open'].apply(lambda x:list(int(i) for i in x.strip('[]'
 stock_data = stock_data.to_list()
 vocab_size = max(set(j for i in stock_data for j in i)) + 1
 
+# Self-Attention Head Definition
 class Head(nn.Module):
     """ one head of self-attention """
 
@@ -52,6 +53,7 @@ class Head(nn.Module):
         out = wei @ v # (B, T, T) @ (B, T, hs) -> (B, T, hs)
         return out
 
+# Multi-Head Self-Attention (Parallel)
 class MultiHeadAttention(nn.Module):
     """ multiple heads of self-attention in parallel """
 
@@ -66,6 +68,7 @@ class MultiHeadAttention(nn.Module):
         out = self.dropout(self.proj(out))
         return out
 
+# Feed-Forward Network (MLP)
 class FeedFoward(nn.Module):
     """ a simple linear layer followed by a non-linearity """
 
@@ -80,7 +83,8 @@ class FeedFoward(nn.Module):
 
     def forward(self, x):
         return self.net(x)
-    
+
+# Transformer Block Definition
 class Block(nn.Module):
     """ Transformer block: communication followed by computation """
 
@@ -99,7 +103,8 @@ class Block(nn.Module):
         y = self.ffwd(x)
         x = self.ln2(x + y)
         return x
-    
+
+# GPT Language Model Definition
 class GPTLanguageModel(nn.Module):
     def __init__(self, vocab_size):
         super().__init__()
