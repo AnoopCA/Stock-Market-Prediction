@@ -154,6 +154,7 @@ class GPTLanguageModel(nn.Module):
             index = torch.cat((index, index_next), dim=1) # (B, T+1) # append sampled index to the running sequence
         return index
 
+# Data Batching Utilities
 def get_batch(qa_tokenized, split):
     X = []
     Y = []
@@ -168,6 +169,7 @@ def get_batch(qa_tokenized, split):
     y_batch = torch.tensor(Y, dtype=torch.long)
     return x_batch.to(device), y_batch.to(device)
 
+# Loss Estimation (Eval Mode)
 @torch.no_grad()
 def estimate_loss():
     out = {}
@@ -182,6 +184,7 @@ def estimate_loss():
     model.train()
     return out
 
+# Training Loop
 if __name__ == "__main__":
     #Start over training on the pre-trained model with the same data
     #saved_model_path = r'D:\ML_Projects\Stock-Market-Prediction\Models\model-11_loss-0.159.pth'
