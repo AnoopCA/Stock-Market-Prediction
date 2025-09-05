@@ -27,8 +27,6 @@ vocab_size = max(set(j for i in stock_data for j in i)) + 1
 
 # Self-Attention Head Definition
 class Head(nn.Module):
-    """ one head of self-attention """
-
     def __init__(self, head_size):
         super().__init__()
         self.key = nn.Linear(n_embd, head_size, bias=False)
@@ -55,8 +53,6 @@ class Head(nn.Module):
 
 # Multi-Head Self-Attention (Parallel)
 class MultiHeadAttention(nn.Module):
-    """ multiple heads of self-attention in parallel """
-
     def __init__(self, num_heads, head_size):
         super().__init__()
         self.heads = nn.ModuleList([Head(head_size) for _ in range(num_heads)])
@@ -70,8 +66,6 @@ class MultiHeadAttention(nn.Module):
 
 # Feed-Forward Network (MLP)
 class FeedFoward(nn.Module):
-    """ a simple linear layer followed by a non-linearity """
-
     def __init__(self, n_embd):
         super().__init__()
         self.net = nn.Sequential(
@@ -86,8 +80,6 @@ class FeedFoward(nn.Module):
 
 # Transformer Block Definition
 class Block(nn.Module):
-    """ Transformer block: communication followed by computation """
-
     def __init__(self, n_embd, n_head):
         # n_embd: embedding dimension, n_head: the number of heads we'd like
         super().__init__()
